@@ -14,7 +14,6 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   return (
     <>
       <LayoutContainer>
-        <Header title="Home" />
         <Content>{children}</Content>
       </LayoutContainer>
     </>

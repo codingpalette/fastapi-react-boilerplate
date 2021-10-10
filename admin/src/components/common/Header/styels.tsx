@@ -12,7 +12,16 @@ export const HeaderContainer = styled(Header)`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  .logo_box {
+    display: block;
+    width: 50px;
+    height: auto;
+  }
   h1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     color: #fff;
     margin-bottom: 0;
   }

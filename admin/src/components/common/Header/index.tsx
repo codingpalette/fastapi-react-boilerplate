@@ -3,10 +3,11 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { Link, useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { HomeOutlined, LogoutOutlined, MenuOutlined } from '@ant-design/icons';
+import { HomeOutlined, LogoutOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { DrawerBox, HeaderContainer, LinkBox, MenuBox } from './styels';
 import fetcher from '../../../utils/fetcher';
+import logo from '../../../assets/images/logo.svg';
 
 export type HeaderProps = {
   title: string;
@@ -44,6 +45,11 @@ const Header = ({ title }: HeaderProps) => {
   return (
     <>
       <HeaderContainer>
+        <div className="logo_box">
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+        </div>
         <h1>{title}</h1>
 
         <MenuBox onClick={showDrawer}>
@@ -55,6 +61,11 @@ const Header = ({ title }: HeaderProps) => {
             <Link to="/">
               <LinkBox icon={<HomeOutlined />} type="text">
                 메인
+              </LinkBox>
+            </Link>
+            <Link to="/setting">
+              <LinkBox icon={<SettingOutlined />} type="text">
+                사이트 설정
               </LinkBox>
             </Link>
 
