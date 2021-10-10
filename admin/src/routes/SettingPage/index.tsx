@@ -23,6 +23,7 @@ const SettingPage = () => {
       <MainTemplate>
         <Header title="Setting" />
         <SectionContainer>
+          <Button style={{ background: 'red' }}>test</Button>
           <Card title="스킨 선택">
             <Form name="basic" onFinish={onFinish}>
               <Form.Item name="radio-group">

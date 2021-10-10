@@ -1,17 +1,17 @@
 import React from 'react';
 import './assets/css/index.css';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Global } from '@emotion/react';
+
 import App from './App';
 
-import GlobalStyle from './assets/css/GlobalStyles';
+import { GlobalStyle } from './assets/css/GlobalStyles';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Global styles={GlobalStyle} />
+
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );
