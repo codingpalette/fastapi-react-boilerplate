@@ -104,4 +104,44 @@ export const ShopSection = styled.section`
   .item_list_box .link_box a:hover {
     text-decoration: underline;
   }
+
+  .list_box {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  //.list_box li {
+  //  width: 33.33%;
+  //}
+
+  .list_box li a {
+    position: relative;
+    display: block;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+  }
+
+  .list_box li img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .list_box .price_box {
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .list_box li h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
 `;

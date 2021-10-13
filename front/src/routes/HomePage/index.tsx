@@ -8,6 +8,10 @@ import { ImageSection, OurSection, ShopSection } from './styles';
 import backImg from '../../assets/images/back_img01.jpeg';
 import Section from '../../components/common/Section';
 
+import item1 from '../../assets/images/item1.jpeg';
+import item2 from '../../assets/images/item2.jpeg';
+import item3 from '../../assets/images/item3.jpeg';
+
 const HomePage = () => {
   return (
     <>
@@ -120,6 +124,62 @@ const HomePage = () => {
             <div className="link_box">
               <Link to="/">VIEW ALL SHOP</Link>
             </div>
+            <ul className="list_box">
+              <li>
+                <Link to="/">
+                  <img src={item1} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme1</h4>
+                  <span>15,000원</span>
+                </div>
+              </li>
+              <li>
+                <Link to="/">
+                  <img src={item2} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme2</h4>
+                  <span>18,000원</span>
+                </div>
+              </li>
+              <li>
+                <Link to="/">
+                  <img src={item3} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme2</h4>
+                  <span>18,000원</span>
+                </div>
+              </li>
+              <li>
+                <Link to="/">
+                  <img src={item1} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme1</h4>
+                  <span>15,000원</span>
+                </div>
+              </li>
+              <li>
+                <Link to="/">
+                  <img src={item2} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme2</h4>
+                  <span>18,000원</span>
+                </div>
+              </li>
+              <li>
+                <Link to="/">
+                  <img src={item3} alt="item" />
+                </Link>
+                <div className="price_box">
+                  <h4>itme2</h4>
+                  <span>18,000원</span>
+                </div>
+              </li>
+            </ul>
           </div>
         </ShopSection>
       </Section>
