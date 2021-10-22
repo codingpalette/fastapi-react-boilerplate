@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Typography } from '@mui/material';
 import { AccountTree } from '@mui/icons-material';
 import Header from '../../components/common/Header';
@@ -13,9 +14,51 @@ import item2 from '../../assets/images/item2.jpeg';
 import item3 from '../../assets/images/item3.jpeg';
 
 const HomePage = () => {
+  const imageInput = useRef<any>();
+  const [files, setFiles] = useState<any>([]);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('13211');
+    const formData = new FormData();
+    formData.append('files', files.length && files[0].uploadedFile);
+
+    try {
+      const res = await axios.post('/image', formData);
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onChangeImages = async (e: any) => {
+    console.log(e);
+
+    const file = e.target.files[0];
+    setFiles([...files, { uploadedFile: file }]);
+
+    // const imageFormData = new FormData();
+    // [].forEach.call(e.target.files, (f) => {
+    //   imageFormData.append('image', f);
+    // });
+    // console.log(imageFormData);
+    // try {
+    //   const res = await axios.post('/image', imageFormData);
+    //   console.log(res);
+    // } catch (e) {
+    //   console.error(e);
+    // }
+  };
+
   return (
     <>
       <Header />
+      <div style={{ margin: '50px 0' }}>
+        <div>Image Upload</div>
+        <form onSubmit={onSubmit}>
+          <input type="file" accept="image/*" ref={imageInput} onChange={onChangeImages} />
+          <button type="submit">전송!</button>
+        </form>
+      </div>
       <ImageSection>
         <div className="content_box">
           <img src={backImg} alt="img" />
