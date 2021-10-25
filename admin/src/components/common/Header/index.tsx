@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import useSWR from 'swr';
 import { Link, useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { HomeOutlined, LogoutOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
+import { HomeOutlined, LogoutOutlined, MenuOutlined, SettingOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { DrawerBox, HeaderContainer, LinkBox, MenuBox } from './styels';
-import fetcher from '../../../utils/fetcher';
 import logo from '../../../assets/images/logo.svg';
+import useUsers from '../../../hooks/useUsers';
 
 export type HeaderProps = {
   title: string;
 };
 
 const Header = ({ title }: HeaderProps) => {
-  const { data: userCheckData, error: userCheckError, mutate } = useSWR('/api/user/check', fetcher);
+  const { mutate } = useUsers();
   const history = useHistory();
   const [visible, setVisible] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'refresh_token']);
@@ -29,7 +28,7 @@ const Header = ({ title }: HeaderProps) => {
     // 로그아웃 이벤트
     console.log('log out');
     try {
-      const res = await axios.post('/api/user/logout');
+      await axios.post('/api/user/logout');
       await removeCookie('access_token');
       await removeCookie('refresh_token');
       await mutate();
@@ -61,6 +60,11 @@ const Header = ({ title }: HeaderProps) => {
             <Link to="/">
               <LinkBox icon={<HomeOutlined />} type="text">
                 메인
+              </LinkBox>
+            </Link>
+            <Link to="/cart">
+              <LinkBox icon={<ShoppingCartOutlined />} type="text">
+                상품 관리
               </LinkBox>
             </Link>
             <Link to="/setting">

@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     DB_HOST = 'localhost'
     DB_USER = 'root'
     DB_PASSWORD = 'root'
-    DB_NAME = 'test'
+    DB_NAME = 'test2'
     SECRET_KEY = 'secret'
 
 

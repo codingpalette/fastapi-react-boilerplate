@@ -41,10 +41,10 @@ class User():
         )
         try:
             curs = conn.cursor(pymysql.cursors.DictCursor)
-            join_sql = '''INSERT INTO `users` (email, nickname, password) VALUES (%s, %s, %s);'''
+            join_sql = '''INSERT INTO `users` (email, nickname, password, level) VALUES (%s, %s, %s, %s);'''
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             save_password = hashed_password.decode('utf-8')
-            curs.execute(join_sql, (email, nickname, save_password))
+            curs.execute(join_sql, (email, nickname, save_password, 1))
             conn.commit()
             return {"result": "success", "message": "회원가입에 성공했습니다"}
         except:

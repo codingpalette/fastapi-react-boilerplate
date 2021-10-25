@@ -2,13 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import useSWR from 'swr';
-import fetcher from '../../utils/fetcher';
 import AuthTemplate from '../../components/templates/AuthTemplate';
 import { FormBottomBox } from './styles';
+import useUsers from '../../hooks/useUsers';
 
 const AuthPage = () => {
-  const { data: userCheckData, error: userCheckError, mutate } = useSWR('/api/user/check', fetcher);
+  const { data, error, mutate } = useUsers();
   const [mode, setMode] = useState('login');
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
@@ -53,7 +52,7 @@ const AuthPage = () => {
     [mode],
   );
 
-  if (!userCheckError && userCheckData) {
+  if (!error && data) {
     return <Redirect to="/" />;
   }
 

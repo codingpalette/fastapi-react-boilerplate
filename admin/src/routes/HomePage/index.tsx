@@ -2,14 +2,13 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import useSWR from 'swr';
-import fetcher from '../../utils/fetcher';
 import MainTemplate from '../../components/templates/MainTemplate';
 import Header from '../../components/common/Header';
+import useUsers from '../../hooks/useUsers';
 
 const HomePage = () => {
-  const { data: userCheckData, error: userCheckError, mutate } = useSWR('/api/user/check', fetcher);
-  if (userCheckError) {
+  const { error } = useUsers();
+  if (error) {
     return <Redirect to="/auth" />;
   }
   return (
