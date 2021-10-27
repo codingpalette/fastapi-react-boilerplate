@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import axios from 'axios';
 import {
   Button,
   Dialog,
@@ -21,8 +22,18 @@ const Header = () => {
     open: false,
     msg: '',
   });
+  const [nickname, onChangeNickname] = useInput('');
+  const [nicknameError, setNicknameError] = useState({
+    open: false,
+    msg: '',
+  });
   const [password, onChangePassword] = useInput('');
   const [passwordError, setPasswordError] = useState({
+    open: false,
+    msg: '',
+  });
+  const [passwordCheck, onChangePasswordCheck] = useInput('');
+  const [passwordCheckError, setPasswordCheckError] = useState({
     open: false,
     msg: '',
   });
@@ -42,11 +53,9 @@ const Header = () => {
   }, [mode]);
 
   const onSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(id.trim().length);
       if (id.trim().length === 0) {
-        console.log('11231');
         setIdError({ open: true, msg: '아이디를 입력해주세요' });
       } else {
         setIdError({
@@ -65,8 +74,49 @@ const Header = () => {
           msg: '',
         });
       }
+      if (mode === 'create') {
+        console.log('create');
+        if (nickname.trim().length === 0) {
+          setNicknameError({ open: true, msg: '닉네임을 입력해주세요' });
+        } else {
+          setNicknameError({ open: false, msg: '' });
+        }
+
+        if (passwordCheck.length === 0) {
+          setPasswordCheckError({
+            open: true,
+            msg: '비밀번호를 입력해주세요',
+          });
+        } else if (password !== passwordCheck) {
+          setPasswordCheckError({
+            open: true,
+            msg: '비밀번호가 서로 다릅니다',
+          });
+        } else {
+          setPasswordCheckError({
+            open: false,
+            msg: '',
+          });
+        }
+      }
+      try {
+        if (mode === 'login') {
+          console.log('로그인');
+        } else {
+          console.log('회원가입');
+          const data = {
+            email: id,
+            nickname,
+            password,
+          };
+          const res = await axios.post('/api/user', data);
+          console.log(res);
+        }
+      } catch (e) {
+        console.error(e);
+      }
     },
-    [id, password],
+    [mode, id, nickname, password, passwordCheck],
   );
 
   return (
@@ -106,6 +156,22 @@ const Header = () => {
                     onChange={onChangeId}
                   />
                 </div>
+                {mode === 'create' && (
+                  <>
+                    <div className="input_group">
+                      <TextField
+                        fullWidth
+                        label="닉네임"
+                        variant="standard"
+                        error={nicknameError.open}
+                        helperText={nicknameError.msg}
+                        value={nickname}
+                        onChange={onChangeNickname}
+                      />
+                    </div>
+                  </>
+                )}
+
                 <div className="input_group">
                   <TextField
                     fullWidth
@@ -118,6 +184,22 @@ const Header = () => {
                     helperText={passwordError.msg}
                   />
                 </div>
+                {mode === 'create' && (
+                  <>
+                    <div className="input_group">
+                      <TextField
+                        fullWidth
+                        label="비밀번호 확인"
+                        type="password"
+                        variant="standard"
+                        value={passwordCheck}
+                        onChange={onChangePasswordCheck}
+                        error={passwordCheckError.open}
+                        helperText={passwordCheckError.msg}
+                      />
+                    </div>
+                  </>
+                )}
               </DialogContent>
               <div className="mode_select">
                 <button type="button" onClick={onClickModeChange}>
