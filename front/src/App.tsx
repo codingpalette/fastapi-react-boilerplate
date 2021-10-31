@@ -1,10 +1,12 @@
+import loadable from '@loadable/component';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import logo from './assets/images/logo.svg';
 
 import HomePage from './routes/HomePage';
+
+const AdminPage = loadable(() => import('./routes/AdminPage'));
 
 function App() {
   const theme = createTheme({
@@ -23,6 +25,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/admin" component={AdminPage} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
