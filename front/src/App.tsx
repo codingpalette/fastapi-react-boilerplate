@@ -7,6 +7,7 @@ import logo from './assets/images/logo.svg';
 import HomePage from './routes/HomePage';
 
 const AdminPage = loadable(() => import('./routes/AdminPage'));
+const AdminProductPage = loadable(() => import('./routes/AdminProductPage'));
 
 function App() {
   const theme = createTheme({
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/admin" component={AdminPage} />
+          <Route exact path="/admin/product" component={AdminProductPage} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

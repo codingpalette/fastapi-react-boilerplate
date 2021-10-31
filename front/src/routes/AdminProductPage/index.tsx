@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from '../../components/admin/Header';
 
-const AdminPage = () => {
+const AdminProductPage = () => {
   return (
     <>
       <div>
-        <Header title="Admin" />
+        <Header title="상품등록" />
       </div>
     </>
   );
 };
 
-export default AdminPage;
+export default AdminProductPage;
