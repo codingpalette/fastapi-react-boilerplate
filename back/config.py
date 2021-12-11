@@ -1,14 +1,17 @@
-from pydantic import BaseSettings
+from dotenv import load_dotenv
+import os
 
 
-class Settings(BaseSettings):
-    DB_HOST = 'localhost'
-    DB_USER = 'root'
-    DB_PASSWORD = 'root'
-    DB_NAME = 'test2'
-    SECRET_KEY = 'secret'
 
 
 def conf():
-    settings = Settings()
-    return settings
+    load_dotenv(".config")
+    config = {
+        "HOST":os.getenv('DB_HOST'),
+        "DATABASE":os.getenv('DB_NAME'),
+        "USERNAME":os.getenv('DB_USER'),
+        "PASSWORD":os.getenv('DB_PASSWORD'),
+        "TOKEN_KEY":os.getenv('TOKEN_KEY')
+    }
+    return config
+
