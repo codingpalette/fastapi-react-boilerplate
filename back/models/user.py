@@ -5,19 +5,17 @@ import jwt
 import datetime
 import time
 from config import conf
+from database import basic
+
+
+
 
 class User():
     async def get_email_user(email):
-        conn = pymysql.connect(
-            host=conf().DB_HOST,
-            user=conf().DB_USER,
-            password=conf().DB_PASSWORD,
-            db=conf().DB_NAME,
-            charset='utf8'
-        )
+        conn = basic()
         try:
             curs = conn.cursor(pymysql.cursors.DictCursor)
-            email_sql = '''SELECT email, nickname, password FROM users WHERE email = %s;'''
+            email_sql = '''SELECT email, nickname, level, password FROM users WHERE email = %s;'''
             curs.execute(email_sql,email)
             # print('10초 시작')
             # time.sleep(10)
@@ -31,20 +29,11 @@ class User():
 
 
     def create(email, nickname, password):
-        print('create_user model')
-        conn = pymysql.connect(
-            host=conf().DB_HOST,
-            user=conf().DB_USER,
-            password=conf().DB_PASSWORD,
-            db=conf().DB_NAME,
-            charset='utf8'
-        )
+        conn = basic()
         try:
             curs = conn.cursor(pymysql.cursors.DictCursor)
             join_sql = '''INSERT INTO `users` (email, nickname, password, level) VALUES (%s, %s, %s, %s);'''
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            save_password = hashed_password.decode('utf-8')
-            curs.execute(join_sql, (email, nickname, save_password, 1))
+            curs.execute(join_sql, (email, nickname, password, 1))
             conn.commit()
             return {"result": "success", "message": "회원가입에 성공했습니다"}
         except:
@@ -53,15 +42,7 @@ class User():
             conn.close()
 
     def login(email, password, user_password):
-        print('login start')
-
-        conn = pymysql.connect(
-            host=conf().DB_HOST,
-            user=conf().DB_USER,
-            password=conf().DB_PASSWORD,
-            db=conf().DB_NAME,
-            charset='utf8'
-        )
+        conn = basic()
         try:
             curs = conn.cursor(pymysql.cursors.DictCursor)
             password_check = bcrypt.checkpw(password.encode('utf-8'), user_password.encode('utf-8'))
@@ -87,6 +68,19 @@ class User():
                 print(sql)
 
                 return response
+        except:
+            return False
+        finally:
+            conn.close()
+
+    async def token_update(refresh_token, email):
+        conn = basic()
+        try:
+            curs = conn.cursor(pymysql.cursors.DictCursor)
+            sql = '''UPDATE `users` SET refresh_token=%s WHERE email=%s '''
+            curs.execute(sql, (refresh_token, email))
+            conn.commit()
+            return True
         except:
             return False
         finally:
